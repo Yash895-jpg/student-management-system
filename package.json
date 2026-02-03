@@ -2,8 +2,7 @@
   "name": "student-management-system",
   "private": false,
   "version": "0.0.0",
-  "homepage": "https://yash895-jpg.github.io/student-management-system",
-  
+  "homepage": "https://yash895-jpg.github.io/student-management-system", 
   "type": "module",
 "scripts": {
   "dev": "vite",
@@ -12,7 +11,6 @@
   "predeploy": "npm run build",
   "deploy": "gh-pages -d dist"
 },
-
   "dependencies": {
     "bootstrap": "^5.3.8",
     "react": "^19.2.0",
