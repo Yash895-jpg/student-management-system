@@ -2,6 +2,8 @@
   "name": "student-management-system",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://yash895-jpg.github.io/student-management-system",
+  
   "type": "module",
   "scripts": {
     "dev": "vite",
