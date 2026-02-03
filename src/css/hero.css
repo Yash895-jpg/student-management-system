@@ -1,0 +1,46 @@
+.hero {
+  height: 75vh;
+  background-image: url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Dark overlay */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 600px;
+  padding: 120px 60px;
+}
+
+.hero-overlay h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.hero-overlay p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.hero-overlay button {
+  background: #22c55e;
+  border: none;
+  padding: 12px 22px;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.hero-overlay button:hover {
+  background: #16a34a;
+}

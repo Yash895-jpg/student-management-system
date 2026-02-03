@@ -1,0 +1,183 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* ================= HERO SECTION ================= */
+.hero {
+  height: 75vh;
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.45)
+    ),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Hero content */
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 600px;
+  padding: 100px 60px;
+}
+
+.hero-overlay h1 {
+  font-size: 44px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.hero-overlay p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.hero-overlay button {
+  background: #22c55e;
+  border: none;
+  padding: 12px 26px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.hero-overlay button:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+/* ================= FEATURES SECTION ================= */
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 0 60px 80px;
+  margin-top: -90px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Feature cards */
+.features .card {
+  height: 160px;
+  border-radius: 14px;
+  padding: 24px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Hover animation */
+.features .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 28px 45px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= FEATURE COLORS ================= */
+/* FORCE HOME FEATURE COLORS */
+.features .card.green {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.features .card.yellow {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #111;
+}
+
+.features .card.blue {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.features .card.pink {
+  background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 40px 60px;
+  }
+
+  .hero-overlay {
+    padding: 80px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr;
+    padding: 0 20px 60px;
+  }
+
+  .hero-overlay {
+    padding: 60px 20px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 34px;
+  }
+}
+.hero {
+  animation: fadeHero 1.2s ease-out;
+}
+
+@keyframes fadeHero {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.clickable {
+  cursor: pointer;
+}
+.feature-card {
+  height: 130px;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

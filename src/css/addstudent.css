@@ -1,0 +1,48 @@
+.add-student {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+  animation: popUp 0.6s ease;
+}
+
+.add-student h2 {
+  text-align: center;
+}
+
+.add-student form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-student input,
+.add-student select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.add-student button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-student button:hover {
+  background: #1e40af;
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

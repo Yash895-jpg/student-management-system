@@ -1,0 +1,38 @@
+.certifications-page {
+  padding: 40px;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.certificate-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(221, 88, 12, 0.096);
+  transition: transform 0.3s ease;
+}
+
+.certificate-card:hover {
+  transform: translateY(-6px);
+}
+
+.certificate-card h3 {
+  margin-bottom: 6px;
+}
+
+.certificate-card p {
+  color: #555555;
+  font-size: 14px;
+}
+.certifications-bg {
+  min-height: 100vh;
+  background-image: url("../assets/bg/certifications-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
