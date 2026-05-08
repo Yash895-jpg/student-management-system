@@ -1,64 +1,206 @@
 .navbar {
-  background: #2563eb;
-  color: white;
-  padding: 15px;
-  text-align: center;
-}
-.navbar {
-  background: #2563eb;
-  color: white;
-  padding: 15px;
+  position: fixed;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  z-index: 1100;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 18px;
+  height: calc(var(--topbar-height) - 20px);
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 28px;
+  background: rgba(17, 33, 51, 0.74);
+  color: #f7f4ee;
+  box-shadow: 0 22px 55px rgba(10, 20, 33, 0.25);
+  backdrop-filter: blur(22px);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
 }
 
 .menu-btn {
-  font-size: 20px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000; /* 🔥 VERY IMPORTANT */
-}
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  z-index: 1000;
-}
-.theme-switcher button {
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  margin-left: 8px;
-  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.theme-switcher button:hover {
-  transform: scale(1.2);
+.menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #f8fafc;
 }
-/* NAV LINKS */
+
+.menu-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.brand-copy {
+  min-width: 0;
+}
+
+.brand-kicker {
+  display: block;
+  margin-bottom: 3px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.brand-copy h2 {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
 .nav-links {
   display: flex;
-  gap: 18px;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding-bottom: 4px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
+.nav-links a:hover,
 .nav-links a.active {
-  border-bottom: 3px solid #22c55e;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fffdf7;
+  transform: translateY(-1px);
+}
+
+.topbar-utilities {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-status,
+.topbar-date,
+.topbar-user,
+.topbar-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.topbar-user {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.topbar-user-name,
+.topbar-user-email {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-user-name {
+  color: #fffdf7;
+  font-size: 0.8rem;
+}
+
+.topbar-user-email {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.72rem;
+}
+
+.topbar-logout {
+  justify-content: center;
+  background: rgba(180, 35, 24, 0.18);
+  color: #fff7f4;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.topbar-logout:hover {
+  transform: translateY(-1px);
+  background: rgba(180, 35, 24, 0.28);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #49de80;
+  box-shadow: 0 0 0 6px rgba(73, 222, 128, 0.12);
+}
+
+@media (max-width: 1199px) {
+  .topbar-status,
+  .topbar-date {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .topbar-user {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    padding: 12px 14px;
+    border-radius: 22px;
+  }
+
+  .brand-kicker {
+    display: none;
+  }
+
+  .brand-copy h2 {
+    font-size: 1rem;
+  }
+
+  .topbar-utilities {
+    gap: 8px;
+  }
+
+  .topbar-logout {
+    padding: 10px 12px;
+  }
 }

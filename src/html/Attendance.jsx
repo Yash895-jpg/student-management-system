@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import studentData from "../js/studentData";
 import {
   PieChart,
@@ -9,35 +9,55 @@ import {
   Tooltip,
 } from "recharts";
 
+const COLORS = ["#0f766e", "#d97706"];
+
+function AttendanceTooltip({ active, payload }) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+
+  return (
+    <div className="chart-tooltip">
+      {payload.map((entry) => (
+        <p key={entry.name} className="chart-tooltip-value">
+          <span
+            className="chart-tooltip-dot"
+            style={{ backgroundColor: entry.color }}
+          />
+          {entry.name}: <strong>{entry.value}</strong>
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export default function Attendance() {
   const [students, setStudents] = useState(
-    studentData.map((s) => ({
-      ...s,
+    studentData.map((student) => ({
+      ...student,
       status: "present",
     }))
   );
-
   const [courseFilter, setCourseFilter] = useState("All");
 
-  const presentCount = students.filter(
-    (s) => s.status === "present"
-  ).length;
-
-  const absentCount = students.filter(
-    (s) => s.status === "absent"
-  ).length;
+  const presentCount = students.filter((student) => student.status === "present").length;
+  const absentCount = students.filter((student) => student.status === "absent").length;
 
   const chartData = [
     { name: "Present", value: presentCount },
     { name: "Absent", value: absentCount },
   ];
 
-  const COLORS = ["#22c55e", "#ef4444"];
+  const filteredStudents = useMemo(() => {
+    return students.filter((student) => {
+      return courseFilter === "All" || student.course === courseFilter;
+    });
+  }, [students, courseFilter]);
 
   const markStatus = (id, status) => {
-    setStudents(
-      students.map((s) =>
-        s.id === id ? { ...s, status } : s
+    setStudents((previous) =>
+      previous.map((student) =>
+        student.id === id ? { ...student, status } : student
       )
     );
   };
@@ -45,128 +65,179 @@ export default function Attendance() {
   return (
     <div className="container-fluid page">
       <div className="container py-4 fade-in">
-        {/* PAGE HEADER */}
-        <div className="mb-4">
-          <h2 className="fw-bold">Attendance</h2>
-          <p className="text-muted">
-            Mark and analyze student attendance
-          </p>
-        </div>
+        <div className="page-shell p-4 p-lg-5">
+          <div className="page-header">
+            <div>
+              <span className="eyebrow mb-3">Attendance Command Center</span>
+              <h2 className="fw-bold">Attendance</h2>
+              <p className="text-muted">
+                Monitor today&apos;s attendance, filter by program, and update each
+                student record in real time.
+              </p>
+            </div>
 
-        {/* TOP SECTION */}
-        <div className="row g-4 mb-4">
-          {/* PIE CHART */}
-          <div className="col-md-4">
-            <div className="card p-3 shadow-sm">
-              <h5 className="mb-3">Attendance Overview</h5>
-
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={chartData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={85}
-                    label
-                    isAnimationActive
-                    animationDuration={1200}
-                    animationEasing="ease-out"
-                  >
-                    {chartData.map((entry, index) => (
-                      <Cell
-                        key={index}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+            <div className="page-header-actions">
+              <button type="button" className="btn btn-soft">
+                Sync reports
+              </button>
+              <button type="button" className="btn btn-primary">
+                Generate summary
+              </button>
             </div>
           </div>
 
-          {/* FILTER */}
-          <div className="col-md-8">
-            <div className="card p-3 shadow-sm h-100">
-              <h5 className="mb-3">Filter Students</h5>
-
-              <select
-                className="form-select w-50"
-                value={courseFilter}
-                onChange={(e) =>
-                  setCourseFilter(e.target.value)
-                }
-              >
-                <option value="All">All Courses</option>
-                <option value="BCA">BCA</option>
-                <option value="BSc">BSc</option>
-                <option value="BCom">BCom</option>
-                <option value="MBA">MBA</option>
-              </select>
+          <div className="stat-grid">
+            <div className="stat-card teal hover-lift">
+              <small>Present</small>
+              <h3>{presentCount}</h3>
+              <p>Students currently marked present today</p>
+            </div>
+            <div className="stat-card rose hover-lift">
+              <small>Absent</small>
+              <h3>{absentCount}</h3>
+              <p>Students needing attendance follow-up</p>
+            </div>
+            <div className="stat-card primary hover-lift">
+              <small>Coverage</small>
+              <h3>{Math.round((presentCount / students.length) * 100)}%</h3>
+              <p>Daily attendance rate across all programs</p>
+            </div>
+            <div className="stat-card amber hover-lift">
+              <small>Filtered view</small>
+              <h3>{filteredStudents.length}</h3>
+              <p>Students visible in the current roster</p>
             </div>
           </div>
-        </div>
 
-        {/* ATTENDANCE LIST */}
-        <div className="row g-4">
-          {students
-            .filter(
-              (s) =>
-                courseFilter === "All" ||
-                s.course === courseFilter
-            )
-            .map((s) => (
-              <div className="col-md-4" key={s.id}>
-                <div
-                  className={`card p-3 shadow-sm hover-lift ${
-                    s.status === "present"
-                      ? "border-start border-success border-4"
-                      : "border-start border-danger border-4"
-                  }`}
-                >
-                  <h5 className="mb-1">{s.name}</h5>
-                  <span className="badge bg-secondary mb-2">
-                    {s.course}
-                  </span>
-
-                  <p className="mb-3">
-                    Status:{" "}
-                    <strong
-                      className={
-                        s.status === "present"
-                          ? "text-success"
-                          : "text-danger"
-                      }
-                    >
-                      {s.status}
-                    </strong>
-                  </p>
-
-                  <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-sm btn-success btn-animate"
-                      onClick={() =>
-                        markStatus(s.id, "present")
-                      }
-                    >
-                      Present
-                    </button>
-
-                    <button
-                      className="btn btn-sm btn-danger btn-animate"
-                      onClick={() =>
-                        markStatus(s.id, "absent")
-                      }
-                    >
-                      Absent
-                    </button>
+          <div className="row g-4">
+            <div className="col-xl-4">
+              <div className="card section-card h-100">
+                <div className="section-title">
+                  <div>
+                    <h4>Attendance Snapshot</h4>
+                    <p>Daily distribution for present and absent students.</p>
                   </div>
                 </div>
+
+                <div className="chart-frame">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Tooltip content={<AttendanceTooltip />} />
+                      <Legend
+                        verticalAlign="bottom"
+                        iconType="circle"
+                        wrapperStyle={{ paddingTop: 10, fontSize: "13px" }}
+                      />
+                      <Pie
+                        data={chartData}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="46%"
+                        innerRadius="48%"
+                        outerRadius="78%"
+                        paddingAngle={5}
+                        labelLine={false}
+                        label={({ name, percent }) =>
+                          `${name} ${Math.round(percent * 100)}%`
+                        }
+                        isAnimationActive
+                        animationDuration={1400}
+                        animationEasing="ease-out"
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell
+                            key={entry.name}
+                            fill={COLORS[index % COLORS.length]}
+                            stroke="rgba(255,255,255,0.9)"
+                            strokeWidth={3}
+                          />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
-            ))}
+            </div>
+
+            <div className="col-xl-8">
+              <div className="card section-card h-100">
+                <div className="section-title">
+                  <div>
+                    <h4>Attendance Roster</h4>
+                    <p>Update attendance status program by program.</p>
+                  </div>
+                </div>
+
+                <div className="row g-3 mb-4">
+                  <div className="col-md-5">
+                    <select
+                      className="form-select"
+                      value={courseFilter}
+                      onChange={(event) => setCourseFilter(event.target.value)}
+                    >
+                      <option value="All">All courses</option>
+                      <option value="BCA">BCA</option>
+                      <option value="BSc">BSc</option>
+                      <option value="BCom">BCom</option>
+                      <option value="MBA">MBA</option>
+                    </select>
+                  </div>
+                  <div className="col-md-7">
+                    <div className="metric-inline">
+                      <div className="metric-chip">
+                        <strong>07</strong>Students need follow-up
+                      </div>
+                      <div className="metric-chip">
+                        <strong>04</strong>Classes started early
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row g-3">
+                  {filteredStudents.map((student) => (
+                    <div className="col-md-6" key={student.id}>
+                      <div className="data-row h-100 align-items-start flex-column">
+                        <div className="w-100 d-flex justify-content-between gap-3">
+                          <div>
+                            <div className="data-row-title">{student.name}</div>
+                            <div className="data-row-copy">{student.course}</div>
+                          </div>
+                          <span
+                            className={`badge ${
+                              student.status === "present"
+                                ? "bg-success"
+                                : "bg-danger"
+                            }`}
+                          >
+                            {student.status}
+                          </span>
+                        </div>
+
+                        <div className="d-flex gap-2 mt-3">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-success"
+                            onClick={() => markStatus(student.id, "present")}
+                          >
+                            Present
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-danger"
+                            onClick={() => markStatus(student.id, "absent")}
+                          >
+                            Absent
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,43 +1,15 @@
-.teachers-page {
-  padding: 20px;
-}
-
-.teachers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-}
-
-.teacher-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.teacher-card:hover {
-  transform: translateY(-8px);
-}
-
-.teacher-card img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border: 3px solid #3b82f6;
-}
 .teachers-bg {
   min-height: 100vh;
-  padding-top: 60px;
+  padding-top: 6px;
+  background:
+    linear-gradient(rgba(17, 33, 51, 0.72), rgba(17, 33, 51, 0.72)),
+    url("../assets/bg/teachers-bg.jpg") center / cover no-repeat;
+}
 
-  background-image: linear-gradient(
-      rgba(15, 23, 42, 0.75),
-      rgba(15, 23, 42, 0.75)
-    ),
-    url("/src/assets/bg/teachers-bg.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.teacher-avatar {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 30px rgba(17, 33, 51, 0.14);
 }
